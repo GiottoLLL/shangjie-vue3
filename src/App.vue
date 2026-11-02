@@ -1,38 +1,27 @@
 <!--
- * @Description: 
- * @Version: 0.1
+ * @Description: 應用全域佈局
+ * @Version: 1.0
  * @Autor: GiottoLLL7
  * @Date: 2024-05-25 12:38:23
  * @LastEditors: GiottoLLL7
- * @LastEditTime: 2025-02-19 23:12:42
+ * @LastEditTime: 2026-10-30 10:15:00
 -->
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import GHeader from './components/GHeader.vue'
 import ContactBtns from './components/ContactBtns.vue'
-import { ref, onMounted } from 'vue'
-const isMobile = ref(window.innerWidth < 800)
-const isDarkMode = ref(false);
-const handleResize = () => {
-  isMobile.value = window.innerWidth < 800
-}
-
-onMounted(() => {
-  window.addEventListener('resize', handleResize)
-  const mediaQuery = window.matchMedia('(prefers - color - scheme: dark)')
-  isDarkMode.value = mediaQuery.matches
-  mediaQuery.addEventListener('change', (e) => {
-    isDarkMode.value = e.matches;
-  })
-  console.log(mediaQuery.matches)
-})
+import SiteFooter from './components/SiteFooter.vue'
+import Lightbox from './components/ImageLightbox.vue'
 </script>
 
 <template>
-  <GHeader />
-  <RouterView :class="isMobile ? 'pt-52': 'pt-20'" :style="`${isDarkMode ? 'color: rgb(255 190 84) !important' : ''}`" />
-  <ContactBtns />
+  <div class="flex min-h-screen flex-col bg-canvas">
+    <GHeader />
+    <main class="flex-1 pb-[var(--mobile-cta-height)] sm:pb-0">
+      <RouterView />
+    </main>
+    <SiteFooter />
+    <ContactBtns />
+    <Lightbox />
+  </div>
 </template>
-
-<style scoped>
-</style>

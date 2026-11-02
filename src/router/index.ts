@@ -1,60 +1,57 @@
 /*
- * @Description: 路由首页
- * @Version: 0.1
+ * @Description: 路由設定
+ * @Version: 1.0
  * @Autor: GiottoLLL7
  * @Date: 2024-05-25 12:38:23
  * @LastEditors: GiottoLLL7
- * @LastEditTime: 2024-08-14 22:58:46
+ * @LastEditTime: 2026-10-29 17:35:00
  */
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import DetailView from '../views/DetailView.vue'
-import BusinessView from '../views/businessView.vue'
-import RestaurantView from '../views/RestaurantView.vue'
-import FloorWaxingView from '@/views/FloorWaxingView.vue'
-import AboutUsView from '../views/AboutUsView.vue'
 
+/**
+ * 路由元件採懶載入，降低首屏載入體積。
+ * 詳情頁內容較多，拆分後可讓首頁只載入必要程式碼。
+ */
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('../views/HomeView.vue')
     },
     {
       path: '/detail',
       name: 'detail',
-      component: DetailView
+      component: () => import('../views/DetailView.vue')
     },
     {
       path: '/business',
       name: 'business',
-      component: BusinessView
+      component: () => import('../views/businessView.vue')
     },
     {
       path: '/restaurant',
       name: 'restaurant',
-      component: RestaurantView
+      component: () => import('../views/RestaurantView.vue')
     },
     {
       path: '/floorWaxing',
       name: 'floorWaxing',
-      component: FloorWaxingView
+      component: () => import('../views/FloorWaxingView.vue')
     },
     {
       path: '/aboutus',
       name: 'aboutus',
-      component: AboutUsView
+      component: () => import('../views/AboutUsView.vue')
     }
   ],
   scrollBehavior(to, from, savedPosition) {
-    // 解决路由跳转后会滚动到最底部
+    // 解決路由跳轉後會捲動到最底部
     if (savedPosition) {
       return savedPosition
-    } else {
-      return {top: 0}
     }
+    return { top: 0 }
   }
 })
 

@@ -1,18 +1,21 @@
+/*
+ * @Description: 全域樣式入口
+ * @Version: 1.0
+ * @Autor: GiottoLLL7
+ * @Date: 2024-05-25 12:38:23
+ * @LastEditors: GiottoLLL7
+ * @LastEditTime: 2026-10-29 17:35:00
+ */
+
+/* 設計 token 必須在 Tailwind 之前引入，供 utility 參照 */
+@import '../styles/tokens.css';
 @import './base.css';
 
 #app {
+  min-height: 100vh;
 }
 
-a,
-.green {
+a {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+  transition: color 0.2s ease;
 }

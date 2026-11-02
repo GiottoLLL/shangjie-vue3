@@ -7,18 +7,12 @@ dependencies:
   '@fortawesome/free-brands-svg-icons':
     specifier: ^6.5.2
     version: 6.5.2
-  '@fortawesome/free-regular-svg-icons':
-    specifier: ^6.5.2
-    version: 6.5.2
   '@fortawesome/free-solid-svg-icons':
     specifier: ^6.5.2
     version: 6.5.2
   '@fortawesome/vue-fontawesome':
     specifier: ^3.0.8
     version: 3.0.8(@fortawesome/fontawesome-svg-core@6.5.2)(vue@3.4.15)
-  pinia:
-    specifier: ^2.1.7
-    version: 2.1.7(typescript@5.3.2)(vue@3.4.15)
   swiper:
     specifier: ^11.2.4
     version: 11.2.4
@@ -28,9 +22,6 @@ dependencies:
   vue-router:
     specifier: ^4.2.5
     version: 4.2.5(vue@3.4.15)
-  vue3-swiper:
-    specifier: ^1.0.0
-    version: 1.0.0
 
 devDependencies:
   '@rushstack/eslint-patch':
@@ -39,9 +30,6 @@ devDependencies:
   '@tsconfig/node20':
     specifier: ^20.1.2
     version: 20.1.2
-  '@types/lodash':
-    specifier: ^4.17.4
-    version: 4.17.4
   '@types/node':
     specifier: ^20.11.10
     version: 20.11.10
@@ -663,14 +651,6 @@ packages:
       '@fortawesome/fontawesome-common-types': 6.5.2
     dev: false
 
-  /@fortawesome/free-regular-svg-icons@6.5.2:
-    resolution: {integrity: sha512-iabw/f5f8Uy2nTRtJ13XZTS1O5+t+anvlamJ3zJGLEVE2pKsAWhPv2lq01uQlfgCX7VaveT3EVs515cCN9jRbw==}
-    engines: {node: '>=6'}
-    requiresBuild: true
-    dependencies:
-      '@fortawesome/fontawesome-common-types': 6.5.2
-    dev: false
-
   /@fortawesome/free-solid-svg-icons@6.5.2:
     resolution: {integrity: sha512-QWFZYXFE7O1Gr1dTIp+D6UcFUF0qElOnZptpi7PBUMylJh+vFmIedVe1Ir6RM1t2tEQLLSV1k7bR4o92M+uqlw==}
     engines: {node: '>=6'}
@@ -934,10 +914,6 @@ packages:
 
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
-    dev: true
-
-  /@types/lodash@4.17.4:
-    resolution: {integrity: sha512-wYCP26ZLxaT3R39kiN2+HcJ4kTd3U1waI/cY7ivWYqFP6pW3ZNpvi6Wd6PHZx7T/t8z0vlkXMg3QYLa7DZ/IJQ==}
     dev: true
 
   /@types/node@20.11.10:
@@ -2472,24 +2448,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /pinia@2.1.7(typescript@5.3.2)(vue@3.4.15):
-    resolution: {integrity: sha512-+C2AHFtcFqjPih0zpYuvof37SFxMQ7OEG2zV9jRI12i9BOy3YQVAHwdKtyyc8pDcDyIc33WCIsZaCFWU7WWxGQ==}
-    peerDependencies:
-      '@vue/composition-api': ^1.4.0
-      typescript: '>=4.4.4'
-      vue: ^2.6.14 || ^3.3.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-      typescript:
-        optional: true
-    dependencies:
-      '@vue/devtools-api': 6.6.1
-      typescript: 5.3.2
-      vue: 3.4.15(typescript@5.3.2)
-      vue-demi: 0.14.7(vue@3.4.15)
-    dev: false
-
   /pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
@@ -2992,21 +2950,6 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vue-demi@0.14.7(vue@3.4.15):
-    resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
-    engines: {node: '>=12'}
-    hasBin: true
-    requiresBuild: true
-    peerDependencies:
-      '@vue/composition-api': ^1.0.0-rc.1
-      vue: ^3.0.0-0 || ^2.6.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-    dependencies:
-      vue: 3.4.15(typescript@5.3.2)
-    dev: false
-
   /vue-eslint-parser@9.4.2(eslint@8.49.0):
     resolution: {integrity: sha512-Ry9oiGmCAK91HrKMtCrKFWmSFWvYkpGglCeFAIqDdr9zdXmMMpJOmUJS7WWsW7fX81h6mwHmUZCQQ1E0PkSwYQ==}
     engines: {node: ^14.17.0 || >=16.0.0}
@@ -3052,10 +2995,6 @@ packages:
       semver: 7.6.2
       typescript: 5.3.2
     dev: true
-
-  /vue3-swiper@1.0.0:
-    resolution: {integrity: sha512-d/6eEvinBy2BH4yB2JOgpUerO1WKNzcz3VbEHkP/F0jwWxGb4l6ZUHTHBG1Pb5D/0x9d1JLEAepkmQVjLMkIJw==}
-    dev: false
 
   /vue@3.4.15(typescript@5.3.2):
     resolution: {integrity: sha512-jC0GH4KkWLWJOEQjOpkqU1bQsBwf4R1rsFtw5GQJbjHVKWDzO6P0nWWBTmjp1xSemAioDFj1jdaK1qa3DnMQoQ==}
