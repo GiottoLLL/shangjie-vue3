@@ -71,7 +71,13 @@ export default {
       },
       maxWidth: {
         container: 'var(--container)'
-      }
+      },
+      // 展開透明度刻度為 0–100 的整數步進。
+      // Tailwind 預設刻度僅有 5 的倍數，使用預設刻度以外的值（如 /92）時
+      // 該類別會被「靜默丟棄」且不產生任何錯誤訊息，故在此完整展開。
+      opacity: Object.fromEntries(
+        Array.from({ length: 101 }, (_, i) => [i, String(i / 100)])
+      )
     }
   },
   plugins: []

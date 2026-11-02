@@ -189,6 +189,16 @@ const getImageUrl = (name: string) => {
 - 移除 `animate-pulse`、`animate-bounce` 等廉價動效
 - 中文字體使用 `Noto Sans TC`（已在 `index.html` 引入字體連結）
 
+#### 頁首固定使用磨砂玻璃背景
+
+`src/components/GHeader.vue` 的 `<header>` 必須維持 `bg-surface/80` + `backdrop-blur-md`（客戶 2026-11-02 指定的質感），**不可改回實底 `bg-surface`**。
+
+- 導覽文字維持 `text-ink-700`，確保在淡青半透明底上仍具高對比
+- 不可再降低不透明度或移除模糊，否則青綠 Hero 會透上來使文字難以辨識（此為先前改成實底的原因）
+- 行動版選單面板維持實底 `bg-surface`（下拉選單需不透明以利閱讀）
+
+> `bg-surface/80` 依賴 `--surface` 為「R G B」三通道格式才能運作，見下方警告。
+
 #### ⚠️ 設計 token 必須維持「R G B」三通道格式
 
 `src/styles/tokens.css` 的顏色變數**必須**寫成 `11 107 99` 而非 `#0b6b63`：
@@ -209,6 +219,21 @@ brand: { 700: 'rgb(var(--brand-700) / <alpha-value>)' }
 `src/assets/base.css` 中直接引用變數處也需以 `rgb(var(--x))` 包裹。
 
 > **驗證方式：** 建置後於 `dist/assets/*.css` 搜尋 `.from-brand-700\/95`，確認有輸出。若查無此規則，代表格式已被改回 hex。
+
+#### ⚠️ 透明度修飾符的值必須存在於 Tailwind 刻度內
+
+Tailwind 的 `/opacity` 修飾符只接受存在於 `theme.opacity` 的值。值不存在時，**該類別被靜默丟棄，不產生 CSS 也沒有任何錯誤訊息**。
+
+```html
+<!-- ❌ 92 不在刻度內 → 類別消失；連鎖使 --tw-gradient-stops 失效，整條漸層不渲染 -->
+bg-gradient-to-r from-brand-700/92 via-brand-700/75 to-brand-700/40
+```
+
+**本專案已在 `tailwind.config.js` 將 `theme.extend.opacity` 展開為 0–100 整數步進**，因此任意 `/NN` 皆可正常使用。若此設定被移除，務必自行比對刻度。
+
+**排查口訣：** 漸層／遮罩整條消失時，先在 `dist/assets/*.css` 搜尋對應類別（例如 `.from-brand-700\/92`）；**查無此規則 = 類別被丟棄**，而非樣式被覆蓋。
+
+> 實測案例（2026-11-02）：首頁 Hero 遮罩在行動版完全失效、白色文字落在亮圖上不可讀，根因即為 `from-brand-700/92` 不在刻度內；桌機版因 `sm:` 變體皆有效而不受影響。詳見 `docs/03-bug-fixes.md` A-6。
 
 ### 6.4 FontAwesome
 
@@ -293,6 +318,10 @@ pnpm dev    # 背景啟動
 > **排障準則：** 遇到「點擊無反應」時，**先確認事件處理器是否真的被觸發**（於 handler 內暫時 `console.log`，再用瀏覽器工具查 console），再決定是否改動程式碼。
 > 實測案例（2026-10-30）：燈箱點擊無反應，經 console 證實 handler 未執行、且頁面上其他按鈕同樣無反應，最終定位為**瀏覽器分頁狀態異常**（點擊耗時恆為 5.2 秒的可操作性逾時），改開新分頁後功能完全正常 —— 程式碼本身無誤。
 > 此类情況切勿直接改寫功能程式碼。
+
+> **判斷 console 錯誤來源：** `Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist`、`MessageRuntimeError` 搭配 `content.*.js` / `selection.*.js` 等檔名者，係**瀏覽器擴充功能的 content script** 向背景服務發送訊息失敗，**與本站程式碼無關**，不需處理（實測案例 2026-11-02：`PAGE_INFO`、`QUERY_QS_PANEL` 訊息來自第三方擴充功能）。
+> 判別依據：站台程式碼的堆疊一律指向 `localhost:5173/src/**` 或 `/assets/**`；`content.` 前綴與 `chrome.runtime` API 則屬擴充功能。
+> 本站 `src/` 內**完全未使用** `chrome.*` / `browser.*` / `sendMessage` 等擴充功能 API（可 grep 驗證）。
 
 ---
 

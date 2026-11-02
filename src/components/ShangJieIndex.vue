@@ -129,25 +129,22 @@ const highlights = [
         </swiper-slide>
       </swiper>
 
+      <!--
+        遮罩層：行動版採垂直漸層（文字位於下方），桌機版採水平漸層（文字位於左側）。
+        透明度值必須存在於 Tailwind 刻度內，否則整組漸層會被靜默丟棄。
+      -->
       <div
-        class="absolute inset-0 z-[1] bg-gradient-to-r from-brand-700/92 via-brand-700/75 to-brand-700/40 sm:from-brand-700/90 sm:via-brand-700/70 sm:to-brand-700/30"
+        class="absolute inset-0 z-[1] bg-gradient-to-b from-brand-700/70 via-brand-700/88 to-brand-700/95 sm:bg-gradient-to-r sm:from-brand-700/90 sm:via-brand-700/70 sm:to-brand-700/30"
       />
 
       <div class="relative z-10 mx-auto max-w-container px-4 pb-12 pt-16 sm:pb-16 sm:pt-24">
         <div class="max-w-2xl">
-          <span
-            class="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-white backdrop-blur-sm"
-          >
-            <font-awesome-icon class="text-[10px]" :icon="['fas', 'check-circle']" />
-            專業外判清潔服務
-          </span>
-
-          <h1 class="mt-4 text-[28px] font-black leading-[1.25] text-white sm:text-[40px]">
+          <h1 class="text-[28px] font-black leading-[1.25] text-white sm:text-[40px]">
             專業清潔服務<br class="sm:hidden" />
             讓每個角落煥然一新
           </h1>
 
-          <p class="mt-4 max-w-xl text-[15px] leading-relaxed text-brand-50 sm:text-base">
+          <p class="mt-4 max-w-xl text-[15px] leading-relaxed text-white sm:text-base">
             外判保潔 · 除甲醛 · 地板打蠟 ——
             尚潔服務有限公司以專業團隊與環保技術，為寫字樓、餐廳及住宅提供最合適的清潔方案。
           </p>

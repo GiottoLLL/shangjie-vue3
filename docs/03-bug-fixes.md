@@ -136,6 +136,39 @@ RestaurantView.vue: footer=False
 
 **✅ 修復狀態：已完成。** 全部 5 個視圖的檔頭註解已改為繁體中文並準確描述實際用途（如「寫字樓商業清潔服務詳情頁」「餐廳廚房清潔服務詳情頁」「地板打蠟服務詳情頁」「除甲醛服務詳情頁」「關於我們」）。
 
+### A-6 【P1】首頁 Hero 漸層遮罩在行動版完全失效 → **已於 2026-11-02 修復**
+
+**實測（原狀態）：** 首頁 Hero 的遮罩層寫法為
+
+```
+bg-gradient-to-r from-brand-700/92 via-brand-700/75 to-brand-700/40 sm:from-brand-700/90 sm:via-brand-700/70 sm:to-brand-700/30
+```
+
+建置產物 CSS 查詢結果：
+
+```
+.from-brand-700\/92   -> 0  ← 類別不存在
+.via-brand-700\/75    -> 1
+.to-brand-700\/40     -> 1
+```
+
+**根因：** Tailwind 的透明度修飾符只接受存在於 `theme.opacity` 刻度內的值（3.4.3 預設為 5 的倍數：0/5/10…95/100）。`92` 不在刻度內 → **該類別被靜默丟棄，不產生任何 CSS，也不產生任何錯誤訊息**。
+
+連鎖效應：`from-*` 缺失導致 `--tw-gradient-stops` 內的 `var(--tw-gradient-from)` 無效 → `--tw-gradient-stops` 變為 invalid → `background-image: linear-gradient(to right, var(--tw-gradient-stops))` 整條失效 → **遮罩層完全沒有背景**，輪播圖片直接裸露出來，疊加白色文字後幾乎無法閱讀。
+
+**為何桌機版正常：** `sm:` 變體（90／70／30）全部在刻度內，於 ≥640px 時覆蓋失效的基底值，故只有行動版（<640px）出現此問題。
+
+**影響：** 行動版首頁 Hero 的標題、內文、徽章全部落在明亮照片上，白字近乎不可見（客戶 2026-11-02 回饋）。
+
+**✅ 修復狀態：已完成（兩層）。**
+
+1. **根因修補：** `tailwind.config.js` 的 `theme.extend.opacity` 展開為 0–100 整數步進，使任意 `/NN` 值皆可產生類別，杜絕此類靜默失效。
+2. **版面調整：** 遮罩改為行動版垂直漸層（`from-brand-700/70 via-brand-700/88 to-brand-700/95`，文字位於下方）、桌機版水平漸層（`sm:from-brand-700/90 sm:via-brand-700/70 sm:to-brand-700/30`，文字位於左側）。另依客戶要求刪除「專業外判清潔服務」徽章。
+
+> **註：** 期間曾以 `-webkit-text-stroke` 深色描邊作為輔助方案，但遮罩層修復後，客戶確認**純白字**（`text-white`）已具備足夠對比度且觀感更乾淨，故描邊方案已移除，Hero 文字維持無描邊的純白字。
+
+**驗證：** 建置產物確認 `.from-brand-700\/70`、`.via-brand-700\/88`、`.to-brand-700\/95`、`.sm\:from-brand-700\/90` 皆已產生；591px 與 1280px 視口截圖確認文字可讀。
+
 ---
 
 ## B. 程式碼品質
@@ -285,6 +318,7 @@ src/components/ShangJieIndex.vue:155:18  error  Irregular whitespace not allowed
 | A-3 | 5 個頁面缺少頁腳 | P1 | ✅ 已修復 | 否 |
 | A-4 | 關於我們頁文案重複 | P1 | ✅ 已修復 | 否 |
 | A-5 | 頁面註解標頭錯誤 | P1 | ✅ 已修復 | 否 |
+| A-6 | 首頁 Hero 漸層遮罩於行動版失效 | P1 | ✅ 已修復 | 否 |
 | B-1 | FontAwesome 前綴寫法 | P1 | ✅ 已修復 | 否 |
 | B-2 | naive-ui 未使用卻完整打包 | P1 | ✅ 已修復 | 否 |
 | B-3 | 未使用依賴與腳手架殘留 | P2 | ✅ 已修復 | 否 |

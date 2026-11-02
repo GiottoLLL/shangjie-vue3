@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
 <template>
   <header
     :class="headerVisible ? 'translate-y-0' : '-translate-y-full'"
-    class="fixed inset-x-0 top-0 z-30 border-b border-line bg-surface shadow-soft transition-transform duration-300"
+    class="fixed inset-x-0 top-0 z-30 border-b border-line bg-surface/80 shadow-soft backdrop-blur-md transition-transform duration-300"
   >
     <div class="mx-auto flex h-16 max-w-container items-center justify-between px-4">
       <button

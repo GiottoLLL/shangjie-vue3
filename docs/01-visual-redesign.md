@@ -292,7 +292,10 @@ pnpm run build        # 必須 exit 0
 | `text-justify` 中文排版 | 全站移除，改為 `leading-relaxed` | 截圖確認 |
 | `animate-pulse` / `animate-bounce` | 全站移除 | 程式碼檢查 |
 | 頁面缺少頁腳 | `SiteFooter.vue` 置於 `App.vue`，全站 6 頁生效 | 截圖確認 |
-| **Header 半透明導覽文字看不清** | `bg-surface/85` 讓青綠 Hero 透上來，`text-ink-600` 灰字對比不足 → 改為實底 `bg-surface` + `shadow-soft`，導覽色改 `text-ink-700` | 截圖確認 |
+| **Header 半透明導覽文字看不清** | 初期 `bg-surface/85` 無模糊，青綠 Hero 透上來使 `text-ink-600` 灰字對比不足 → 先改為實底 `bg-surface` + `shadow-soft`，導覽色改 `text-ink-700` | 截圖確認 |
+| **Header 實底背景缺乏玻璃質感**（2026-11-02 客戶回饋） | 改為磨砂玻璃：`bg-surface/80` + `backdrop-blur-md`（12px 模糊），保留 `shadow-soft` 與 `border-line`；導覽色維持 `text-ink-700`，深色文字在淡青半透明底上仍具高對比 | 747px 與 1280px 截圖確認 |
+| **首頁 Hero 漸層遮罩於行動版完全失效**（2026-11-02 客戶回饋） | `from-brand-700/92` 不在 Tailwind 透明度刻度內 → 類別被靜默丟棄，連鎖使整條漸層不渲染。已於 `tailwind.config.js` 展開 `theme.extend.opacity` 為 0–100 整數步進，並將遮罩改為行動版垂直漸層、桌機版水平漸層 | 591px 與 1280px 截圖確認 + 建置產物 CSS 驗證 |
+| **首頁 Hero 白色文字在亮圖上不可讀**（2026-11-02 客戶回饋） | 根因為上方漸層遮罩失效；遮罩修復後改回**純白字**（`text-white`），不需描邊。另依客戶要求刪除「專業外判清潔服務」徽章 | 591px、747px 與 1920px 截圖確認 |
 | **Tailwind 透明度修飾符失效** | 詳見下方「重要陷阱」 | 建置產物 CSS 驗證 |
 | **輪播圖片完全不顯示** | Swiper 需明確高度才能計算 slide 高度 → 補 `min-h-[440px]` 於 section 與 wrapper／slide 高度約束 | 截圖確認 |
 
